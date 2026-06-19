@@ -32,21 +32,20 @@ Ziel ist es, öffentlich verfügbare Reddit-Beiträge mit Bezug zu Wien zu samme
 ## Einrichten der Umgebung
 
 #### Virtuelle Umgebung erstellen:
-python -m venv venv
+`python -m venv venv`
 
 #### Virtuelle Umgebung aktivieren:
-source venv/bin/activate
+`source venv/bin/activate`
 
 #### Abhängigkeiten installieren:
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ## Umgebungsvariablen
 
-Die Zugangsdaten werden in einer lokalen .env Datei gespeichert:
-REDDIT_CLIENT_ID=deine_reddit_client_id  
-REDDIT_CLIENT_SECRET=dein_reddit_client_secret  
-REDDIT_USER_AGENT=dein_reddit_user_agent  
+Die Zugangsdaten werden in einer lokalen **.env** Datei gespeichert:  
+**REDDIT_CLIENT_ID=**deine_reddit_client_id  
+**REDDIT_CLIENT_SECRET=**dein_reddit_client_secret  
+**REDDIT_USER_AGENT=**dein_reddit_user_agent  
 
 ## API-Test
 
-python src/01_test_reddit_connection.py
