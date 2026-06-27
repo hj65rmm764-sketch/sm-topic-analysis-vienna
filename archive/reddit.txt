@@ -1,0 +1,1 @@
+Archiviertes Reddit-Test Authentifizierungs Skript. Reddit API ist nicht mehr frei zugänglich, daher wird Mastodon verwendet.
