@@ -1,7 +1,9 @@
-praw
+Mastodon.py
 pandas
 numpy
 python-dotenv
+beautifulsoup4
+lxml
 nltk
 spacy
 scikit-learn
