@@ -14,6 +14,13 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
+from config import (
+    RAW_DATA_PATH,
+    DEFAULT_INSTANCE,
+    SEARCH_HASHTAGS,
+    MAX_POSTS_PER_HASHTAG,
+)
+
 def clean_html(raw_html: str) -> str:
     """
     Entfernt HTML-Tags aus Mastodon Beiträgen.
@@ -83,17 +90,9 @@ def main() -> None:
     """
     load_dotenv()
 
-    instance = os.getenv("MASTODON_INSTANCE", "https://mastodon.social")
+    instance = os.getenv("MASTODON_INSTANCE", DEFAULT_INSTANCE)
 
-    hashtags = [
-        "Wien",
-        "Vienna",
-        "Austria",
-        "Österreich",
-        "WienerLinien",
-        "Klimakrise",
-        "Hitzewelle",
-    ]
+    hashtags = SEARCH_HASHTAGS
 
     all_posts = []
 
@@ -104,7 +103,7 @@ def main() -> None:
         print(f"Lade Posts für #{hashtag} ...")
 
         try:
-            posts = fetch_hashtag_posts(instance=instance, hashtag=hashtag, limit=40)
+            posts = fetch_hashtag_posts(instance=instance, hashtag=hashtag, limit=MAX_POSTS_PER_HASHTAG)
             for post in posts:
                 all_posts.append(extract_post_data(post, query_hashtag=hashtag))
 
@@ -124,7 +123,8 @@ def main() -> None:
     if not df.empty:
         df = df.drop_duplicates(subset="id")
 
-    output_path = "data/raw/raw_mastodon_posts.csv"
+    output_path = RAW_DATA_PATH
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(output_path, index=False, encoding="utf-8")
 
     print("-" * 80)
