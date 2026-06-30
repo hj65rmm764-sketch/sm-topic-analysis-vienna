@@ -23,8 +23,10 @@ import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 
-RAW_DATA_PATH = Path("data/raw/raw_mastodon_posts.csv")
-PROCESSED_DATA_PATH = Path("data/processed/clearn_mastodon_posts.csv")
+from config import (
+    RAW_DATA_PATH,
+    PROCESSED_DATA_PATH,
+)
 
 def download_nltk_resources() -> None:
     """
