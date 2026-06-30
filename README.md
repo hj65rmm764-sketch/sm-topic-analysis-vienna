@@ -37,6 +37,25 @@ Die Daten werden über öffentliche Mastodon-Hashtag-Timelines erhoben. Für den
 
 ## Projektstruktur
 
+sm-topic-analysis-vienna/
+│
+├── data/
+│   ├── raw/                  Rohdaten aus der Mastodon API
+│   ├── processed/            Bereinigte Datensätze für NLP
+│   └── results/              
+│
+├── src/
+│   ├── config.py             Zentrale Projektkonfiguration
+│   ├── test_connection.py    Test-Verbindung zur Mastodon API
+│   ├── collect_posts.py      Sammelt/speichert Posts in CSV
+│   └── preprocess.py         Bereinigt die gesammelten Posts
+│
+├── .env                      Lokale Konfiguration
+├── .gitignore
+├── README.md
+└── requirements.txt
+
+
 ## Einrichten der Umgebung
 
 #### Virtuelle Umgebung erstellen:
@@ -54,5 +73,10 @@ Die Mastodon-Instanz wird in einer lokalen **.env** Datei gespeichert:
 **MASTODON_INSTANCE**=https://mastodon.social
 
 ## API Verbindung testen
-`python src/01_test_mastodon_connection.py`
+`python src/test_connection.py`
 
+## Beiträge sammeln
+`python src/collect_posts.py`
+
+## Beiträge bereinigen
+`python src/preprocess.py`
