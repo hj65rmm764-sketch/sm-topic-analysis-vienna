@@ -37,23 +37,23 @@ Die Daten werden über öffentliche Mastodon-Hashtag-Timelines erhoben. Für den
 
 ## Projektstruktur
 
-sm-topic-analysis-vienna/
-│
-├── data/
-│   ├── raw/                  Rohdaten aus der Mastodon API
-│   ├── processed/            Bereinigte Datensätze für NLP
-│   └── results/              
-│
-├── src/
-│   ├── config.py             Zentrale Projektkonfiguration
-│   ├── test_connection.py    Test-Verbindung zur Mastodon API
-│   ├── collect_posts.py      Sammelt/speichert Posts in CSV
-│   └── preprocess.py         Bereinigt die gesammelten Posts
-│
-├── .env                      Lokale Konfiguration
-├── .gitignore
-├── README.md
-└── requirements.txt
+sm-topic-analysis-vienna/  
+│  
+├── data/  
+│   ├── raw/                  Rohdaten aus der Mastodon API  
+│   ├── processed/            Bereinigte Datensätze für NLP  
+│   └── results/  
+│  
+├── src/  
+│   ├── config.py             Zentrale Projektkonfiguration  
+│   ├── test_connection.py    Test-Verbindung zur Mastodon API  
+│   ├── collect_posts.py      Sammelt/speichert Posts in CSV  
+│   └── preprocess.py         Bereinigt die gesammelten Posts  
+│  
+├── .env                      Lokale Konfiguration  
+├── .gitignore  
+├── README.md  
+└── requirements.txt  
 
 
 ## Einrichten der Umgebung
