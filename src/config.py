@@ -22,6 +22,16 @@ RAW_DATA_PATH = RAW_DIR / "raw_mastodon_posts.csv"
 
 PROCESSED_DATA_PATH = PROCESSED_DIR / "clean_mastodon_posts.csv"
 
+DATASET_STATISTICS_PATH = RESULTS_DIR / "dataset_statistics.csv"
+
+LANGUAGE_DISTRIBUTION_PATH = RESULTS_DIR / "languange_distribution.csv"
+
+TOP_HASHTAGS_PATH = RESULTS_DIR / "top_hashtags.csv"
+
+TOP_USERS_PATH = RESULTS_DIR / "top_users.csv"
+
+WORD_FREQUENCIES_PATH = RESULTS_DIR / "word_frequencies.csv"
+
 # Mastodon
 
 DEFAULT_INSTANCE = "https://mastodon.social"
