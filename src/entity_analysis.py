@@ -58,16 +58,22 @@ def create_dataset_statistics(df: pd.DataFrame) -> pd.DataFrame:
         columns = ["metric", "value"]
     )
 
-def create_language_distribution(df: pd.DataFrame) -> pd.DataFrame:
+def create_language_distribution(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
     """
     Berechnet Verteilung der erkannten Sprachen.
     """
-    return (
+    top_languages = (
         df["language"]
         .fillna("unknown")
         .value_counts()
-        .reset_index()
-        .rename(columns = {"language": "count", "index": "language"})
+        .head(top_n)
+    )
+
+    return pd.DataFrame(
+        {
+            "language": top_languages.index,
+            "count": top_languages.values,
+        }
     )
 
 def create_top_hashtags(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
