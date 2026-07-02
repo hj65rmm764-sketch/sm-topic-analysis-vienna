@@ -32,6 +32,14 @@ TOP_USERS_PATH = RESULTS_DIR / "top_users.csv"
 
 WORD_FREQUENCIES_PATH = RESULTS_DIR / "word_frequencies.csv"
 
+BAG_OF_WORDS_PATH = RESULTS_DIR / "bag_of_words.csv"
+
+TFIDF_RESULTS_PATH = RESULTS_DIR / "tfidf_scores.csv"
+
+LSA_RESULTS_PATH = RESULTS_DIR / "lsa_topics.csv"
+
+LDA_RESULTS_PATH = RESULTS_DIR / "lda_topics.csv"
+
 # Mastodon
 
 DEFAULT_INSTANCE = "https://mastodon.social"
