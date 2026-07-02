@@ -17,3 +17,9 @@ from config import (
     BAG_OF_WORDS_PATH,
 )
 
+def load_data() -> pd.DataFrame:
+    """
+    Lädt bereinigte Posts
+    """
+    return pd.read_csv(PROCESSED_DATA_PATH)
+
