@@ -96,13 +96,18 @@ def create_top_users(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
     """
     Ermittelt aktivsten User
     """
-    return (
+    top_users = (
         df["username"]
         .fillna("unknown")
         .value_counts()
         .head(top_n)
-        .reset_index()
-        .rename(columns={"username": "count", "index": "username"})
+    )
+
+    return pd.DataFrame(
+        {
+            "username": top_users.index,
+            "count": top_users.values,
+        }
     )
 
 def create_word_frequencies(df: pd.DataFrame, top_n: int = 30) -> pd.DataFrame:
