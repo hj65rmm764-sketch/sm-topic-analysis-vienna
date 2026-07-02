@@ -38,7 +38,7 @@ def load_processed_data(path: Path) -> pd.DataFrame:
             "Bitte zuerst preprocess.py ausführen."
         )
     
-    return pd.read_csv()
+    return pd.read_csv(path)
 
 def create_dataset_statistics(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -55,7 +55,7 @@ def create_dataset_statistics(df: pd.DataFrame) -> pd.DataFrame:
 
     return pd.DataFrame(
         statistics.items(),
-        columts = ["metric", "value"]
+        columns = ["metric", "value"]
     )
 
 def create_language_distribution(df: pd.DataFrame) -> pd.DataFrame:
@@ -64,7 +64,7 @@ def create_language_distribution(df: pd.DataFrame) -> pd.DataFrame:
     """
     return (
         df["language"]
-        .fiilna("unknown")
+        .fillna("unknown")
         .value_counts()
         .reset_index()
         .rename(columns = {"language": "count", "index": "language"})
@@ -92,3 +92,78 @@ def create_top_hashtags(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
         columns = ["hashtag", "count"]
     )
 
+def create_top_users(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
+    """
+    Ermittelt aktivsten User
+    """
+    return (
+        df["username"]
+        .fillna("unknown")
+        .value_counts()
+        .head(top_n)
+        .reset_index()
+        .rename(columns={"username": "count", "index": "username"})
+    )
+
+def create_word_frequencies(df: pd.DataFrame, top_n: int = 30) -> pd.DataFrame:
+    """
+    Zählt die am häufigsten vorkommenden Wörter
+    """
+    all_words = []
+
+    for text in df["clean_text"].fillna(""):
+        words = text.split()
+        all_words.extend(words)
+
+    counter = Counter(all_words)
+
+    return pd.DataFrame(
+        counter.most_common(top_n),
+        columns = ["word", "count"]
+    )
+
+def main() -> None:
+    """
+    Führt explorative Analyse und Entitiy-Analyse durch
+    """
+
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    df = load_processed_data(PROCESSED_DATA_PATH)
+
+    dataset_statistics = create_dataset_statistics(df)
+    language_distribution = create_language_distribution(df)
+    top_hashtags = create_top_hashtags(df)
+    top_users = create_top_users(df)
+    word_frequencies = create_word_frequencies(df)
+
+    dataset_statistics.to_csv(DATASET_STATISTICS_PATH, index=False, encoding="utf-8")
+    language_distribution.to_csv(LANGUAGE_DISTRIBUTION_PATH, index=False, encoding="utf-8")
+    top_hashtags.to_csv(TOP_HASHTAGS_PATH, index=False, encoding="utf-8")
+    top_users.to_csv(TOP_USERS_PATH, index=False, encoding="utf-8")
+    word_frequencies.to_csv(WORD_FREQUENCIES_PATH, index=False, encoding="utf-8")
+
+    print("Explorative Analyse abgeschlossen.")
+    print("-" * 80)
+
+    print("Datensatzstatistik:")
+    print(dataset_statistics)
+
+    print("-" * 80)
+    print("Top Hashtags:")
+    print(top_hashtags.head(10))
+
+    print("-" * 80)
+    print("Top User:")
+    print(top_users.head(10))
+
+    print("-" * 80)
+    print("Häufigste Wörter:")
+    print(word_frequencies.head(10))
+
+    print("-" * 80)
+    print(f"Ergebnisse gespeichert unter: {RESULTS_DIR}")
+
+if __name__ == "__main__":
+
+    main()
