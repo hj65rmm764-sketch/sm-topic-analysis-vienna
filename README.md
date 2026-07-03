@@ -36,25 +36,84 @@ Die Daten werden über öffentliche Mastodon-Hashtag-Timelines erhoben. Für den
 8. Diskussion und Interpretation der Ergebnisse
 
 ## Projektstruktur
+
 ```
-sm-topic-analysis-vienna/  
-│  
-├── data/  
-│   ├── raw/                  Rohdaten aus der Mastodon API  
-│   ├── processed/            Bereinigte Datensätze für NLP  
-│   └── results/  
-│  
-├── src/  
-│   ├── config.py             Zentrale Projektkonfiguration  
-│   ├── test_connection.py    Test-Verbindung zur Mastodon API  
-│   ├── collect_posts.py      Sammelt/speichert Posts in CSV  
-│   └── preprocess.py         Bereinigt die gesammelten Posts  
-│  
-├── .env                      Lokale Konfiguration  
-├── .gitignore  
-├── README.md  
-└── requirements.txt  
+sm-topic-analysis-vienna/
+│
+├── data/
+│   ├── raw/
+│   │   └── raw_mastodon_posts.csv
+│   │
+│   ├── processed/
+│   │   └── clean_mastodon_posts.csv
+│   │
+│   └── results/
+│       ├── bag_of_words.csv
+│       ├── dataset_statistics.csv
+│       ├── language_distribution.csv
+│       ├── lda_topics.csv
+│       ├── lsa_topics.csv
+│       ├── tfidf_scores.csv
+│       ├── top_hashtags.csv
+│       ├── top_users.csv
+│       └── word_frequencies.csv
+│
+├── src/
+│   ├── config.py
+│   ├── test_connection.py
+│   ├── collect_posts.py
+│   ├── preprocess.py
+│   ├── entity_analysis.py
+│   └── topic_modeling.py
+│
+├── .env
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
+## Beschreibung
+
+*config.py:*
+Verwaltet sämtliche projektweite Einstellungen wie Dateipfade oder Ergebnisverzeichnisse.
+
+*test_connection.py:*
+Testet die Verbindung zur öffentlichen Mastodon-API und prüft, ob Posts erfolgreich geladen werden können.
+
+*collect_posts.py:*
+Verbindet sich mit der Mastodon-API und lädt Posts zu definierten Hashtags in Rohform herunter, es werden bereits Duplikate entfernt.
+
+Output: data/raw/raw_mastodon_posts.csv
+
+*preprocess.py:*
+Bereitet die Texte für NLP Verfahren vor:
+- URL Entfernung
+- Entfernung von Mentions
+- Entfernung von Sonderzeichen
+- Kleinschreibung
+- Tokenisierung
+- Stopword-Entfernung
+- Berechnung d. Tokenanzahl
+
+Output: data/processed/clean_mastodon_posts.csv
+
+*entity_analysis.py:*
+Führt explorative Analyse durch und erstellt:
+- Datensatzstatistik
+- Sprachverteilung
+- häufigste Hashtags
+- aktivste User
+- häufigste Wörter
+
+Output: data/results/*
+
+*topic_modeling.py:*
+Implementiert NLP Verfahren:
+- Bag-of-Words
+- TF-IDF
+- Latend Semantic Analysis (LSA)
+- Latent Dirichlet Allocation (LDA)
+
+Output: data/results/*
 
 ## Einrichten der Umgebung
 
