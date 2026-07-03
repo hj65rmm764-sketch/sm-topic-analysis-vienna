@@ -18,7 +18,7 @@ Die Daten werden über öffentliche Mastodon-Hashtag-Timelines erhoben. Für den
 1. Verbindung zur öffentlichen Mastodon-API
 2. Abruf öffentlicher Beiträge zu Wien über Hashtags wie #Wien, #Vienna, #Austria
 3. Speicherung der Rohdaten im CSV-Format
-4. Vorverarbeitung der Tweet-Texte
+4. Vorverarbeitung der Texte
     - Entfernen von HTML
     - Entfernen von URLs
     - Entfernen von Sonderzeichen
@@ -36,7 +36,7 @@ Die Daten werden über öffentliche Mastodon-Hashtag-Timelines erhoben. Für den
 8. Diskussion und Interpretation der Ergebnisse
 
 ## Projektstruktur
-
+```
 sm-topic-analysis-vienna/  
 │  
 ├── data/  
@@ -54,7 +54,7 @@ sm-topic-analysis-vienna/
 ├── .gitignore  
 ├── README.md  
 └── requirements.txt  
-
+```
 
 ## Einrichten der Umgebung
 
@@ -67,16 +67,25 @@ sm-topic-analysis-vienna/
 #### Abhängigkeiten installieren:
 `pip install -r requirements.txt`
 
-## Umgebungsvariablen
+#### Umgebungsvariablen
 
 Die Mastodon-Instanz wird in einer lokalen **.env** Datei gespeichert:  
 **MASTODON_INSTANCE**=https://mastodon.social
 
-## API Verbindung testen
+
+## Ausführung
+
+### API Verbindung testen
 `python src/test_connection.py`
 
-## Beiträge sammeln
+### Beiträge sammeln
 `python src/collect_posts.py`
 
-## Beiträge bereinigen
+### Beiträge bereinigen
 `python src/preprocess.py`
+
+### Entitäts Analyse
+`python src/entity_analysis.py`
+
+### NLP Methoden
+`python src/topic_modeling.py`
