@@ -11,7 +11,7 @@ Dieses Skript implementiert die im Studienskript behandelten NLP Verfahren:
 
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.decomposition import TruncatedSVD
+from sklearn.decomposition import TruncatedSVD, LatentDirichletAllocation
 
 from config import (
     PROCESSED_DATA_PATH,
@@ -20,6 +20,7 @@ from config import (
     LSA_RESULTS_PATH,
     NUMBER_OF_TOPICS,
     NUMBER_OF_TOPIC_WORDS,
+    LDA_RESULTS_PATH,
 )
 
 def load_data() -> pd.DataFrame:
