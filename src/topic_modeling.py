@@ -16,6 +16,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from config import (
     PROCESSED_DATA_PATH,
     BAG_OF_WORDS_PATH,
+    TFIDF_RESULTS_PATH,
 )
 
 def load_data() -> pd.DataFrame:
@@ -68,17 +69,51 @@ def create_tfidf_scores(df: pd.DataFrame, max_features: int = 50,) -> pd.DataFra
     Returns:
         DataFrame mit Begriffen und durchschnittlichen TF-IDF Wert
     """
+    vectorizer = TfidfVectorizer(
+        max_features=max_features
+    )
+
+    tfidf_matrix = vectorizer.fit_transform(
+        df["clean_text"]
+    )
+
+    words = vectorizer.get_feature_names_out()
+
+    average_scores = tfidf_matrix.mean(axis=0).A1
+
+    result = pd.DataFrame(
+        {
+            "word": words,
+            "average_tfidf": average_scores,
+        }
+    )
+
+    results = result.sort_values(
+        by="average_tfidf",
+        ascending=False,
+    )
+
+    return result
+
+    
 
 def main():
 
     df = load_data()
 
     bag_of_words = create_bag_of_words(df)
+    tfidf_scores = create_tfidf_scores(df)
 
     bag_of_words.to_csv(
         BAG_OF_WORDS_PATH,
         index=False,
         encoding="utf-8",
+    )
+
+    tfidf_scores.to_csv(
+        TFIDF_RESULTS_PATH,
+        index=False,
+        encoding="utf-8"
     )
 
     print("-" * 80)
@@ -89,6 +124,15 @@ def main():
 
     print("-" * 80)
     print(f"Datei gespeichert unter:\n{BAG_OF_WORDS_PATH}")
+
+    print("-" * 80)
+    print("TF-IDF")
+    print("-" * 80)
+
+    print(tfidf_scores.head(20))
+
+    print("-" * 80)
+    print(f"Datei gespeichert unter:\n{TFIDF_RESULTS_PATH}")
 
 if __name__ == "__main__":
     main()
