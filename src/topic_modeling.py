@@ -142,6 +142,51 @@ def create_lsa_topics(df: pd.DataFrame, number_of_topics: int = NUMBER_OF_TOPICS
         )
     return pd.DataFrame(topics)
 
+
+def create_lda_topics(df: pd.DataFrame, number_of_topics: int = NUMBER_OF_TOPICS, number_of_words: int = NUMBER_OF_TOPIC_WORDS, max_features: int = 100,) -> pd.DataFrame:
+    """
+    Führt LDA basierend auf einer Bag-of-Words Matrix durch.
+
+    LDA versucht Dokumente als Kobination mehrerer Themen zu beschreiben. Im Gegensatz
+    zu LSA wird keine TF-IDF Matrix verwendet, sondern eine Worthäufigkeitsmatrix.
+    """
+
+    # Bag-of-Words Matrix
+    vectorizer = CountVectorizer(
+        max_features=max_features
+    )
+
+    bow_matrix = vectorizer.fit_transform(
+        df["clean_text"]
+    )
+
+    words = vectorizer.get_feature_names_out()
+
+    lda_model = LatentDirichletAllocation(
+        n_components=number_of_topics,
+        random_state=42,
+        learning_method="batch"
+    )
+
+    lda_model.fit(bow_matrix)
+
+    topics = []
+
+    # Für jedes Thema werden die Wörter mit der höchsten Gewichtung extrahiert
+    for topic_index, topic in enumerate(lda_model.components_):
+        word_indices = topic.argsort()[::-1][:number_of_words]
+        topic_words = [words[index] for index in word_indices]
+
+        topics.append(
+            {
+                "topic": f"LDA Topic {topic_index + 1}",
+                "top_words": ", ".join(topic_words)
+            }
+        )
+
+    return pd.DataFrame(topics)
+
+
 def main():
 
     df = load_data()
@@ -149,6 +194,7 @@ def main():
     bag_of_words = create_bag_of_words(df)
     tfidf_scores = create_tfidf_scores(df)
     lsa_topics = create_lsa_topics(df)
+    lda_topics = create_lda_topics(df)
 
     bag_of_words.to_csv(
         BAG_OF_WORDS_PATH,
@@ -164,6 +210,12 @@ def main():
 
     lsa_topics.to_csv(
         LSA_RESULTS_PATH,
+        index=False,
+        encoding="utf-8",
+    )
+
+    lda_topics.to_csv(
+        LDA_RESULTS_PATH,
         index=False,
         encoding="utf-8",
     )
@@ -194,6 +246,15 @@ def main():
 
     print("-" * 80)
     print(f"Datei gespeichert unter:\n{LSA_RESULTS_PATH}")
+
+    print("-" * 80)
+    print("LDA Topics")
+    print("-" * 80)
+
+    print(lda_topics)
+
+    print("-" * 80)
+    print(f"Datei gespeichert unter:\n{LDA_RESULTS_PATH}")
 
 if __name__ == "__main__":
     main()
