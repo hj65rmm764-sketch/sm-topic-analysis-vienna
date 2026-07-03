@@ -98,7 +98,48 @@ def create_tfidf_scores(df: pd.DataFrame, max_features: int = 50,) -> pd.DataFra
 
     return result
 
-    
+
+def create_lsa_topics(df: pd.DataFrame, number_of_topics: int = NUMBER_OF_TOPICS, number_of_words: int = NUMBER_OF_TOPIC_WORDS, max_features: int = 100,) -> pd.DataFrame:
+    """
+    Führt LSA auf Basis einer TF-IDF Matrix durch.
+
+    LSA reduziert die Dimensionen der TF-IDF Matrix und versucht, latente semantische
+    Strukturen bzw Themen in Texten sichtbar zu mache.
+    """
+
+    # TF-IDF Matrix erstellen
+    vectorizer = TfidfVectorizer(
+        max_features=max_features
+    )
+
+    tfidf_matrix = vectorizer.fit_transform(
+        df["clean_text"]
+    )
+
+    words = vectorizer.get_feature_names_out()
+
+    # TruncatedSVD wird für LSA verwendet
+    lsa_model = TruncatedSVD(
+        n_components=number_of_topics,
+        random_state=42
+    )
+
+    lsa_model.fit(tfidf_matrix)
+
+    topics = []
+
+    # Für jedes Thema werden die wichtigsten Wörter extrahiert
+    for topic_index, component in enumerate(lsa_model.components_):
+        word_indices = component.argsort()[::-1][:number_of_words]
+        topic_words = [words[index] for index in word_indices]
+
+        topics.append(
+            {
+                "topic": f"LSA Topic {topic_index + 1}",
+                "top_words": ", ".join(topic_words)
+            }
+        )
+    return pd.DataFrame(topics)
 
 def main():
 
@@ -106,6 +147,7 @@ def main():
 
     bag_of_words = create_bag_of_words(df)
     tfidf_scores = create_tfidf_scores(df)
+    lsa_topics = create_lsa_topics(df)
 
     bag_of_words.to_csv(
         BAG_OF_WORDS_PATH,
@@ -117,6 +159,12 @@ def main():
         TFIDF_RESULTS_PATH,
         index=False,
         encoding="utf-8"
+    )
+
+    lsa_topics.to_csv(
+        LSA_RESULTS_PATH,
+        index=False,
+        encoding="utf-8",
     )
 
     print("-" * 80)
@@ -136,6 +184,15 @@ def main():
 
     print("-" * 80)
     print(f"Datei gespeichert unter:\n{TFIDF_RESULTS_PATH}")
+
+    print("-" * 80)
+    print("LSA Topics")
+    print("-" * 80)
+
+    print(lsa_topics)
+
+    print("-" * 80)
+    print(f"Datei gespeichert unter:\n{LSA_RESULTS_PATH}")
 
 if __name__ == "__main__":
     main()
