@@ -73,18 +73,18 @@ sm-topic-analysis-vienna/
 ```
 ## Beschreibung
 
-*config.py:*
+**config.py:**  
 Verwaltet sämtliche projektweite Einstellungen wie Dateipfade oder Ergebnisverzeichnisse.
 
-*test_connection.py:*
+**test_connection.py:**  
 Testet die Verbindung zur öffentlichen Mastodon-API und prüft, ob Posts erfolgreich geladen werden können.
 
-*collect_posts.py:*
+**collect_posts.py:**  
 Verbindet sich mit der Mastodon-API und lädt Posts zu definierten Hashtags in Rohform herunter, es werden bereits Duplikate entfernt.
 
-Output: data/raw/raw_mastodon_posts.csv
+Output: *data/raw/raw_mastodon_posts.csv*
 
-*preprocess.py:*
+**preprocess.py:**  
 Bereitet die Texte für NLP Verfahren vor:
 - URL Entfernung
 - Entfernung von Mentions
@@ -94,9 +94,9 @@ Bereitet die Texte für NLP Verfahren vor:
 - Stopword-Entfernung
 - Berechnung d. Tokenanzahl
 
-Output: data/processed/clean_mastodon_posts.csv
+Output: *data/processed/clean_mastodon_posts.csv*
 
-*entity_analysis.py:*
+**entity_analysis.py:**  
 Führt explorative Analyse durch und erstellt:
 - Datensatzstatistik
 - Sprachverteilung
@@ -104,16 +104,16 @@ Führt explorative Analyse durch und erstellt:
 - aktivste User
 - häufigste Wörter
 
-Output: data/results/*
+Output: *data/results/**
 
-*topic_modeling.py:*
+**topic_modeling.py:**  
 Implementiert NLP Verfahren:
 - Bag-of-Words
 - TF-IDF
 - Latend Semantic Analysis (LSA)
 - Latent Dirichlet Allocation (LDA)
 
-Output: data/results/*
+Output: *data/results/**
 
 ## Einrichten der Umgebung
 
