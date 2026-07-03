@@ -78,7 +78,7 @@ def create_language_distribution(df: pd.DataFrame, top_n: int = 20) -> pd.DataFr
 
 def create_top_hashtags(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
     """
-    Ermittelt häufigsten Hashtags
+    Ermittelt die häufigsten Hashtags
     """
     all_hashtags = []
 
@@ -100,7 +100,7 @@ def create_top_hashtags(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
 
 def create_top_users(df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
     """
-    Ermittelt aktivsten User
+    Ermittelt die aktivsten User
     """
     top_users = (
         df["username"]
