@@ -17,6 +17,9 @@ from config import (
     PROCESSED_DATA_PATH,
     BAG_OF_WORDS_PATH,
     TFIDF_RESULTS_PATH,
+    LSA_RESULTS_PATH,
+    NUMBER_OF_TOPICS,
+    NUMBER_OF_TOPIC_WORDS,
 )
 
 def load_data() -> pd.DataFrame:
