@@ -11,6 +11,7 @@ Dieses Skript implementiert die im Studienskript behandelten NLP Verfahren:
 
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 from config import (
     PROCESSED_DATA_PATH,
