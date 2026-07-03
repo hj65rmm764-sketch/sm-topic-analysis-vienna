@@ -23,3 +23,62 @@ def load_data() -> pd.DataFrame:
     """
     return pd.read_csv(PROCESSED_DATA_PATH)
 
+def create_bag_of_words(
+        df: pd.DataFrame,
+        max_features: int = 50,
+) -> pd.DataFrame:
+    """
+    Erstellt eine Bag-of-Words Darstellung.
+
+    Args:
+        df: Bereinigte Posts
+        max_features: Max Anzahl an Wörtern
+
+    Returns:
+        DataFrame mit häufigsten Begriffen
+    """
+
+    vectorizer = CountVectorizer(
+        max_features=max_features
+    )
+
+    bow_matrix = vectorizer.fit_transform(
+        df["clean_text"]
+    )
+
+    frequencies = bow_matrix.sum(axis=0).A1
+
+    words = vectorizer.get_feature_names_out()
+
+    result = pd.DataFrame(
+        {
+        "word": words,
+        "count": frequencies
+        }
+    )
+
+    return result
+
+def main():
+
+    df = load_data()
+
+    bag_of_words = create_bag_of_words(df)
+
+    bag_of_words.to_csv(
+        BAG_OF_WORDS_PATH,
+        index=False,
+        encoding="utf-8",
+    )
+
+    print("-" * 80)
+    print("Bag-of-Words")
+    print("-" * 80)
+
+    print(bag_of_words.head(20))
+
+    print("-" * 80)
+    print(f"Datei gespeichert unter:\n{BAG_OF_WORDS_PATH}")
+
+if __name__ == "__main__":
+    main()
