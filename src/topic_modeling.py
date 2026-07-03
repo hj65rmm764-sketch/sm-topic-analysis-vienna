@@ -1,7 +1,7 @@
 """
 Topic Modeling
 
-Dieses Skript implementiert die im Studienskript behandelten NLP Verfahren:
+Dieses Skript implementiert die folgenden NLP Verfahren:
 
 1. Bag-of-Words
 2. TD-IDF
