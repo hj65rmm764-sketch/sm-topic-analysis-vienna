@@ -24,10 +24,7 @@ def load_data() -> pd.DataFrame:
     """
     return pd.read_csv(PROCESSED_DATA_PATH)
 
-def create_bag_of_words(
-        df: pd.DataFrame,
-        max_features: int = 50,
-) -> pd.DataFrame:
+def create_bag_of_words(df: pd.DataFrame, max_features: int = 50,) -> pd.DataFrame:
     """
     Erstellt eine Bag-of-Words Darstellung.
 
@@ -59,6 +56,18 @@ def create_bag_of_words(
     )
 
     return result
+
+def create_tfidf_scores(df: pd.DataFrame, max_features: int = 50,) -> pd.DataFrame:
+    """
+    Berechnet die durchschnittlichen TF-IDF Werte aller Begriffe im Datensatz.
+
+    Args:
+        df: bereinigte Posts
+        max_features: Max Anzahl an Posts
+
+    Returns:
+        DataFrame mit Begriffen und durchschnittlichen TF-IDF Wert
+    """
 
 def main():
 
