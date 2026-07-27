@@ -48,6 +48,10 @@ LSA_RESULTS_PATH = RESULTS_DIR / "lsa_topics.csv"
 
 LDA_RESULTS_PATH = RESULTS_DIR / "lda_topics.csv"
 
+COHERENCE_RESULTS_PATH = RESULTS_DIR ( "coherence_scores.csv")
+
+COHERENCE_PLOT_PATH = RESULTS_DIR / "coherence_scores.png"
+
 # Mastodon
 
 DEFAULT_INSTANCE = "https://mastodon.social"
@@ -67,5 +71,9 @@ MAX_POSTS_PER_HASHTAG = 40
 # Misc
 
 NUMBER_OF_TOPICS = 5
+
+MIN_TOPICS = 2
+
+MAX_TOPICS = 10
 
 NUMBER_OF_TOPIC_WORDS = 10
