@@ -72,14 +72,33 @@ def build_stopword_list() -> set[str]:
     }
 
     custom_stopwords = {
-        "wien",
-        "vienna",
-        "austria",
-        "österreich",
-        "https",
-        "http",
-        "www",
-        "amp",
+       # Ortsbegriffe, die aufgrund der Suchstrategie in fast allen
+       # Dokumenten vorkommen und daher wenig zur Themenbildung beitragen
+       "wien",
+       "vienna",
+       "austria",
+       "oesterreich",
+
+       # Technische Bestandteile von URLs und Tracking-Parametern
+       "http",
+       "https",
+       "www",
+       "com",
+       "org",
+       "net",
+       "utm",
+       "source",
+       "medium",
+       "mastodon",
+       "html",
+       "href",
+       "amp",
+
+       # Zusätzliche häufige und wenig aussagende Begriffe aus der EDA
+       "mehr",
+       "beim",
+       "gibt",
+       "heute",
     }
 
     return german_stopwords.union(english_stopwords).union(custom_stopwords)
@@ -145,7 +164,7 @@ def main() -> None:
     if not RAW_DATA_PATH.exists():
         raise FileNotFoundError(
             f"Rohdaten nicht gefunden: {RAW_DATA_PATH}. "
-            "Bitte zuerst src/02_collect_mastodon_posts.py ausführen."
+            "Bitte zuerst src/collect_posts.py ausführen."
         )
     
     stopword_set = build_stopword_list()
