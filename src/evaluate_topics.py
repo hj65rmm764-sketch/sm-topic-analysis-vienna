@@ -89,3 +89,65 @@ def create_dictionary_and_corpus(
     ]
 
     return dictionary, corpus
+
+def compute_coherence_scores(
+    tokenized_texts: list[list[str]],
+    dictionary: Dictionary,
+    corpus: list[list[tuple[int, int]]],
+    min_topics: int = MIN_TOPICS,
+    max_topics: int = MAX_TOPICS
+) -> pd.DataFrame:
+    """
+    Berechnet den c_v-Coherence Score für mehrere Topic Anzahlen.
+
+    Args:
+        tokenized_texts: Tokenisierte Posts
+        dictionary: Gensim-Wörterbuch
+        corpus: Bag-of-Words Korpus
+        min_topics: Kleinste zu untersuchende Topic-Anzahl
+        max_topics: Größte zu untersuchende Topuc-Anzahl
+
+    Returns:
+        DataFrame mit Topic-Anzahl und Coherence Score
+    """
+    results = []
+
+    for number_of_topics in range(min_topics, max_topics +1):
+        print(
+            f"Berechne Modell mit {number_of_topics} Topics ..."
+        )
+
+        lda_model = LdaModel(
+            corpus=corpus,
+            id2word=dictionary,
+            num_topics=number_of_topics,
+            random_state=42,
+            passes=10,
+            iterations=100,
+            alpha="auto",
+            per_word_topics=False,
+        )
+
+        coherence_model = CoherenceModel(
+            model=lda_model,
+            texts=tokenized_texts,
+            dictionary=dictionary,
+            coherence="c_v",
+            topn=NUMBER_OF_TOPIC_WORDS,
+            processes=1,
+        )
+
+        coherence_score = coherence_model.get_coherence()
+
+        results.append(
+            {
+                "number_of_topics": number_of_topics,
+                "coherence_score": coherence_score,
+            }
+        )
+
+        print(
+            f"Coherence Score: {coherence_score:.4f}"
+        )
+
+    return pd.DataFrame(results)
