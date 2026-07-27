@@ -34,6 +34,22 @@ def download_nltk_resources() -> None:
     """
     nltk.download("stopwords", quiet=True)
 
+def normalize_word(word: str) -> str:
+    """
+    Normalisiert ein einzelnes Wort entsprechend der Textbereinigung.
+
+    Dadurch werden auch Stopwörter wie 'für' oder 'über' in derselben
+    Schreibweise gespeichert wie die bereinigten Texte ('fuer', 'ueber').
+    """
+
+    return (
+        word.lower()
+        .replace("ä", "ae")
+        .replace("ö", "oe")
+        .replace("ü", "ue")
+        .replace("ß", "ss")
+    )
+
 def build_stopword_list() -> set[str]:
     """
     Erställt eine Stopword-Liste für deutsche und englische Texte.
