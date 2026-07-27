@@ -4,7 +4,7 @@ Topic Modeling
 Dieses Skript implementiert die folgenden NLP Verfahren:
 
 1. Bag-of-Words
-2. TD-IDF
+2. TF-IDF
 3. LSA
 4. LDA
 """
@@ -92,7 +92,7 @@ def create_tfidf_scores(df: pd.DataFrame, max_features: int = 50,) -> pd.DataFra
         }
     )
 
-    results = result.sort_values(
+    result = result.sort_values(
         by="average_tfidf",
         ascending=False,
     )
