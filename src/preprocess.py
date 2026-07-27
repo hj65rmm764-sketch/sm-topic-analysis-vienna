@@ -52,16 +52,24 @@ def normalize_word(word: str) -> str:
 
 def build_stopword_list() -> set[str]:
     """
-    Erställt eine Stopword-Liste für deutsche und englische Texte.
+    Erställt eine normalisierte Stopword-Liste für deutsche und englische Texte.
 
-    Mastodon Beiträge zu Wien können in deutsch oder einer anderen Sprache geschreiben sein.
-    Deshalb werden deutsche und englische Stopwords kombiniert.
+    Die Stopwörter werden mit derselben Umlautbehandlung normalisiert wie die 
+    Mastodon-Texte. Zusätzlich werden technische URL- und Plattformreste entfernt,
+    die bei der explorativen Analyse erkannt wurden.
 
     Returns:
-        Set mit Stopwords
+        Set mit normalisierten Stopwörtern
     """
-    german_stopwords = set(stopwords.words("german"))
-    english_stopwords = set(stopwords.words("english"))
+    german_stopwords = {
+        normalize_word(word)
+        for word in stopwords.words("german")
+    }
+
+    english_stopwords = {
+        normalize_word(word)
+        for word in stopwords.words("english")
+    }
 
     custom_stopwords = {
         "wien",
