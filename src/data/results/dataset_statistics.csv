@@ -1,0 +1,7 @@
+metric,value
+number_of_posts,259.0
+number_of_unique_users,171.0
+number_of_languages,7.0
+average_token_count,31.07
+median_token_count,20.0
+max_token_count,904.0
