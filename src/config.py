@@ -4,11 +4,19 @@ Projektweite Config.
 Alle Pfade und Parameter werden zentral verwaltet.
 """
 
-# Verzeichnisse
+
 
 from pathlib import Path
 
-DATA_DIR = Path("data")
+# Ordner in dem config.py liegt: .../sm-topic-analysis-vienna/src
+SRC_DIR = Path(__file__).resolve().parent
+
+# Projektwurzel: .../sm-topic-analysis-vienna
+PROJECT_ROOT = SRC_DIR.parent
+
+# Verzeichnisse
+
+DATA_DIR = PROJECT_ROOT / "data"
 
 RAW_DIR = DATA_DIR / "raw"
 
