@@ -111,7 +111,7 @@ Führt explorative Analyse durch und erstellt:
 
 Output: *data/results/**
 
-**evaluate_topics.py**
+**evaluate_topics.py:**  
 Bewertet unterschiedliche Topic-Anzahlen mithilfe des
 c_v Coherence Scores. Die Ergebnisse dienen als Grundlage
 zur Wahl der in config.py definierten Anzahl an Topics.
