@@ -151,3 +151,40 @@ def compute_coherence_scores(
         )
 
     return pd.DataFrame(results)
+
+def create_coherence_plot(results: pd.DataFrame) -> None:
+    """
+    Erstellt eine graphische Darstellung des Coherence Scores.
+
+    Args:
+        results: DataFrame mit Topic-Anzahlen und Coherence Scores
+    """
+    plt.figure(figsize=(8,5))
+
+    plt.plot(
+        results["number_of_topics"],
+        results["coherence_score"],
+        marker="o",
+    )
+
+    plt.xlabel("Anzahl der Topics")
+    plt.ylabel("Coherence Score (c_v)")
+    plt.title("Coherence Score nach Anzahl der LDA Topics")
+    plt.xticks(results["number_of_topics"])
+    plt.grid(True)
+    plt.tight_layout()
+
+    COHERENCE_PLOT_PATH.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    plt.savefig(
+        COHERENCE_PLOT_PATH,
+        dpi=300,
+        bbox_inches="tight"
+    )
+
+    plt.close
+
+    
