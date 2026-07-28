@@ -187,4 +187,85 @@ def create_coherence_plot(results: pd.DataFrame) -> None:
 
     plt.close
 
-    
+def main() -> None:
+    """
+    Führt die Evaluation der Topic-Anzahlen aus.
+    """
+    df = load_data()
+
+    print(f"Geladene Posts: {len(df)}")
+
+    tokenized_texts = prepare_tokens(df)
+
+    print(
+        f"Für die Evaluation verwendete Texte: "
+        f"{len(tokenized_texts)}"
+    )
+
+    if not tokenized_texts:
+        raise ValueError(
+            "Es sind keine für die bereinigten Texte für die Evaluation verfügbar."
+        )
+
+    dictionary, corpus = create_dictionary_and_corpus(
+        tokenized_texts
+    )
+
+    if len(dictionary) == 0:
+        raise ValueError(
+            "Das erzeugte Wörterbuch enthält keine Begriffe."
+        )
+
+    print(f"Anzahl unterschiedlicher Begriffe: {len(dictionary)}")
+    print(f"-" * 80)
+
+    results = compute_coherence_scores(
+        tokenized_texts=tokenized_texts,
+        dictionary=dictionary,
+        corpus=corpus,
+    )
+
+    COHERENCE_RESULTS_PATH.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    results.to_csv(
+        COHERENCE_RESULTS_PATH,
+        index=False,
+        encoding="utf-8",
+    )
+
+    create_coherence_plot(results)
+
+    best_result = results.loc[
+        results["coherence_score"].idxmax()
+    ]
+
+    print("-" * 80)
+    print("Coherence Auswertung")
+    print("-" * 80)
+    print(results.to_string(index=False))
+
+    print("-" * 80)
+    print(
+        "Höchster Coherence Score: "
+        f"{best_result['coherence_score']:.4f}"
+    )
+    print(
+        "Topic-Anzahl mit höchstem Score: "
+        f"{int(best_result['number_of_topics'])}"
+    )
+
+    print("-" * 80)
+    print(
+        f"Ergebnisse gespeichert unter:\n"
+        f"{COHERENCE_RESULTS_PATH}"
+    )
+    print(
+        f"Grafik gespeichert unter:\n"
+        f"{COHERENCE_PLOT_PATH}"
+    )
+
+if __name__ == "__main__":
+    main()
