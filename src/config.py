@@ -48,7 +48,7 @@ LSA_RESULTS_PATH = RESULTS_DIR / "lsa_topics.csv"
 
 LDA_RESULTS_PATH = RESULTS_DIR / "lda_topics.csv"
 
-COHERENCE_RESULTS_PATH = RESULTS_DIR ( "coherence_scores.csv")
+COHERENCE_RESULTS_PATH = RESULTS_DIR / "coherence_scores.csv"
 
 COHERENCE_PLOT_PATH = RESULTS_DIR / "coherence_scores.png"
 
