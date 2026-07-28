@@ -4,7 +4,7 @@ Dieses Repository enthält ein Data-Analysis-Projekt zur Extraktion häufig disk
 
 ## Ziel des Projekts
 
-Ziel ist es, öffentlich verfügbare Mastodon-Beiträge mit Bezug zu Wien zu sammeln, zu bereinigen und mithilfe von NLP-Verfahren die fünf am häufigsten diskutierten Themen zu extrahieren.
+Ziel ist es, öffentlich verfügbare Mastodon-Beiträge mit Bezug zu Wien zu sammeln, zu bereinigen und mithilfe von NLP-Verfahren die häufigsten diskutierten Themen zu extrahieren.
 Zusätzlich werden Entity-Analysen durchgeführt:
 - häufig verwendete Hashtags
 - besonders aktive User
@@ -30,10 +30,12 @@ Die Daten werden über öffentliche Mastodon-Hashtag-Timelines erhoben. Für den
 6. Vektorisierung der Texte
     - Bag-of-Words
     - TF-IDF
-7. Topic Modeling
+7. Evaluation der Topic-Anzahl
+    - Coherence Score
+8. Topic Modeling
     - Latent Semantic Analysis (LSA)
     - Latent Dirichlet Allocation (LDA)
-8. Diskussion und Interpretation der Ergebnisse
+9. Interpretation
 
 ## Projektstruktur
 
@@ -49,6 +51,8 @@ sm-topic-analysis-vienna/
 │   │
 │   └── results/
 │       ├── bag_of_words.csv
+│       ├── coherence_scores.csv
+│       ├── coherence_scores.png
 │       ├── dataset_statistics.csv
 │       ├── language_distribution.csv
 │       ├── lda_topics.csv
@@ -64,6 +68,7 @@ sm-topic-analysis-vienna/
 │   ├── collect_posts.py
 │   ├── preprocess.py
 │   ├── entity_analysis.py
+│   ├── evaluate_topics.py
 │   └── topic_modeling.py
 │
 ├── .env
@@ -106,11 +111,18 @@ Führt explorative Analyse durch und erstellt:
 
 Output: *data/results/**
 
+**evaluate_topics.py**
+Bewertet unterschiedliche Topic-Anzahlen mithilfe des
+c_v Coherence Scores. Die Ergebnisse dienen als Grundlage
+zur Wahl der in config.py definierten Anzahl an Topics.
+
+Output: *data/results/coherence_scores**
+
 **topic_modeling.py:**  
 Implementiert NLP Verfahren:
 - Bag-of-Words
 - TF-IDF
-- Latend Semantic Analysis (LSA)
+- Latent Semantic Analysis (LSA)
 - Latent Dirichlet Allocation (LDA)
 
 Output: *data/results/**
@@ -134,17 +146,20 @@ Die Mastodon-Instanz wird in einer lokalen **.env** Datei gespeichert:
 
 ## Ausführung
 
-### API Verbindung testen
+### 1. API Verbindung testen
 `python src/test_connection.py`
 
-### Beiträge sammeln
+### 2. Beiträge sammeln
 `python src/collect_posts.py`
 
-### Beiträge bereinigen
+### 3. Beiträge bereinigen
 `python src/preprocess.py`
 
-### Entitäts Analyse
+### 4. Entitäts-Analyse
 `python src/entity_analysis.py`
 
-### NLP Methoden
+### 5. Evaluation der Topic-Anzahlen
+`python src/evaluate_topics.py`
+
+### 6. Topic Modeling (NLP Methoden)
 `python src/topic_modeling.py`
