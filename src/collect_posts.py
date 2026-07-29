@@ -56,7 +56,7 @@ def fetch_hashtag_posts(instance: str, hashtag: str, limit: int = 40) -> list[di
 
 def extract_post_data(post: dict, query_hashtag: str) -> dict:
     """
-    Extrahiere relevante Felder aus einem Post
+    Extrahiert relevante Felder aus einem Post
 
     Args:
         post: Einzelner Post als Dictionary
